@@ -1,3 +1,0 @@
-ptf-1y6t.onrender.com {
-    reverse_proxy 127.0.0.1:8080  # Adjust this based on where your local service is running
-}
