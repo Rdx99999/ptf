@@ -1,11 +1,10 @@
-# Use the official Caddy image
-FROM caddy:latest
+FROM nginx:latest
 
-# Copy the Caddyfile into the container
-COPY Caddyfile /etc/caddy/Caddyfile
+# Copy custom NGINX config
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose necessary ports
-EXPOSE 80 443
+# Expose the port for the proxy
+EXPOSE 80
 
-# Use the default entrypoint provided by the Caddy image
-CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile"]
+# Default entrypoint for NGINX
+CMD ["nginx", "-g", "daemon off;"]
