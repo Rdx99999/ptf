@@ -5,8 +5,7 @@ FROM caddy:latest
 COPY Caddyfile /etc/caddy/Caddyfile
 
 # Expose necessary ports
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443
 
-# Run Caddy when the container starts
-CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile", "--adapter", "caddyfile"]
+# Use the default entrypoint provided by the Caddy image
+CMD ["caddy", "run", "--config", "/etc/caddy/Caddyfile"]
