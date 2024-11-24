@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: open-webui
+    env: docker
+    docker:
+      image: ghcr.io/open-webui/open-webui:main
+    plan: starter # Change to a suitable plan (starter, standard, etc.)
+    ports:
+      - port: 8080
+        protocol: http
+    envVars:
+      - key: HOST_DOCKER_INTERNAL
+        value: host-gateway
+    disk:
+      name: data
+      mountPath: /app/backend/data
+    autoDeploy: true
+    healthCheckPath: /
+    startCommand: ./start.sh
