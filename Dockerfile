@@ -1,10 +1,11 @@
-FROM nginx:latest
+# Use the specified image from the GitHub Container Registry
+FROM ghcr.io/open-webui/open-webui:main
 
-# Copy custom NGINX config
-COPY nginx.conf /etc/nginx/nginx.conf
+# Set working directory inside the container
+WORKDIR /app
 
-# Expose the port for the proxy
-EXPOSE 80
+# Expose the necessary port
+EXPOSE 8080
 
-# Default entrypoint for NGINX
-CMD ["nginx", "-g", "daemon off;"]
+# Command to start the container
+CMD ["./start.sh"]
