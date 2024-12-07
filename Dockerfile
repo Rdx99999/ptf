@@ -24,7 +24,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install Chrome Remote Desktop
 RUN wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb && \
     dpkg --install chrome-remote-desktop_current_amd64.deb || apt-get install --assume-yes --fix-broken && \
-    rm chrome-remote-desktop_current_amd64.deb
+    rm chrome-remote-desktop_current_amd64.deb && \
+    test -f /opt/google/chrome-remote-desktop/start-host || (echo "CRD installation failed" && exit 1)
 
 # Install Google Chrome
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
@@ -46,8 +47,9 @@ RUN echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" > /etc/chrome-remote-de
 RUN groupadd chrome-remote-desktop && usermod -a -G chrome-remote-desktop ${USERNAME}
 
 # Add environment variable to pass the CRD setup command
-ENV CRP="DISPLAY= /opt/google/chrome-remote-desktop/start-host --code="4/0AeanS0bjzJ99nGYWz7_QKgiTQH4SQqFMeTCn1yZavaHGyD87UvtyTRQQbNymE4UhJVdHxg" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$(hostname)"
+ENV CRP="DISPLAY= /opt/google/chrome-remote-desktop/start-host --code="4/0AeanS0ZqqPad_L3NxmsCh5YwPiFEaU-v9yGPxclLeeOW_CkSO_rbnoUAHv5QiqTVcphJRw" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$(hostname)"
 ENV PIN=123456
 
-# Command to execute the CRD setup command during build or container startup
-CMD if [ ! -z "$CRP" ]; then su - ${USERNAME} -c "$CRP --pin=$PIN"; fi && service chrome-remote-desktop start && bash
+# Verify the CRD installation and set up Chrome Remote Desktop
+CMD if [ ! -f /opt/google/chrome-remote-desktop/start-host ]; then echo "CRD not installed correctly" && exit 1; fi && \
+    if [ ! -z "$CRP" ]; then su - ${USERNAME} -c "$CRP --pin=$PIN"; fi && service chrome-remote-desktop start && bash
