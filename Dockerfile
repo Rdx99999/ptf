@@ -43,10 +43,10 @@ RUN echo "exec /etc/X11/Xsession /usr/bin/xfce4-session" > /etc/chrome-remote-de
     chmod +x /etc/chrome-remote-desktop-session
 
 # Add the user to the Chrome Remote Desktop group
-RUN adduser ${USERNAME} chrome-remote-desktop
+RUN groupadd chrome-remote-desktop && usermod -a -G chrome-remote-desktop ${USERNAME}
 
 # Add environment variable to pass the CRD setup command
-ENV CRP="DISPLAY= /opt/google/chrome-remote-desktop/start-host --code="4/0AeanS0ZvPtT65PAm7uwhrsxtLY4CcFJKsz-XUz0slWH3ulIVk5ibFzVY6-9gblPqPIGlXg" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$(hostname)"
+ENV CRP="DISPLAY= /opt/google/chrome-remote-desktop/start-host --code="4/0AeanS0bjzJ99nGYWz7_QKgiTQH4SQqFMeTCn1yZavaHGyD87UvtyTRQQbNymE4UhJVdHxg" --redirect-url="https://remotedesktop.google.com/_/oauthredirect" --name=$(hostname)"
 ENV PIN=123456
 
 # Command to execute the CRD setup command during build or container startup
