@@ -1,10 +1,12 @@
 # Use a Rust image to build the Bore CLI binary
 FROM rust:latest as builder
 
-# Install Rust dependencies for static linking
+# Install musl-gcc and related dependencies
+RUN apt-get update && apt-get install -y \
+    musl-tools build-essential
+
+# Add the musl target for Rust
 RUN rustup target add x86_64-unknown-linux-musl
-ENV CC=musl-gcc
-ENV CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=musl-gcc
 
 # Build Bore CLI as a statically linked binary
 RUN cargo install --target x86_64-unknown-linux-musl bore-cli
