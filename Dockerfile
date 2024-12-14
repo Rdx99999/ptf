@@ -21,4 +21,4 @@ COPY --from=builder /usr/local/cargo/bin/bore /usr/local/bin/bore
 EXPOSE 8080
 
 # Run the Bore server on Render
-CMD ["bore", "server", "--port", "8080"]
+CMD ["bore", "server", "--listen", "0.0.0.0:8080"]
