@@ -1,17 +1,14 @@
-# Use the official n8n Docker image
-FROM n8nio/n8n:latest
+# Use Node.js v22.12.01 runtime as the parent image
+FROM node:22.12.0-alpine
 
-# Set environment variables (optional for customization)
-ENV N8N_HOST=0.0.0.0
-ENV N8N_PORT=5678
-ENV N8N_PROTOCOL=http
-ENV N8N_BASIC_AUTH_ACTIVE=false
-ENV N8N_BASIC_AUTH_USER=n8n
-ENV N8N_BASIC_AUTH_PASSWORD=password
-ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+# Set the working directory
+WORKDIR /app
 
-# Expose port for the n8n web interface
+# Install required dependencies for npx (e.g., bash)
+RUN apk add --no-cache bash
+
+# Expose port 5678 for the n8n web interface
 EXPOSE 5678
 
-# Run n8n when the container starts
-CMD ["docker run -it --rm --name n8n -p 5678:5678 docker.n8n.io/n8n-io/n8n"]
+# Run n8n using npx when the container starts
+CMD ["npx", "n8n"]
