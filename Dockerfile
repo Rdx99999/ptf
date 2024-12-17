@@ -14,4 +14,4 @@ ENV N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
 EXPOSE 5678
 
 # Run n8n when the container starts
-CMD ["n8n"]
+CMD ["docker run -it --rm --name n8n -p 5678:5678 docker.n8n.io/n8n-io/n8n"]
