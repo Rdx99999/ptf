@@ -1,8 +1,8 @@
-# Use the n8n official image from Docker Hub
+# Use official N8N image from the Docker registry
 FROM docker.n8n.io/n8n-io/n8n
 
-# Expose the n8n port
+# Expose the port N8N will run on
 EXPOSE 5678
 
-# Start n8n on container startup
-CMD ["n8n", "start"]
+# Command to run N8N on container startup
+CMD ["n8n"]
