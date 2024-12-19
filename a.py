@@ -1,22 +1,24 @@
 import subprocess
 
-def run_docker():
-    # Docker command to run Firefox in a container with the specified options
+def run_udocker():
+    # Define the udocker command and its arguments
     command = [
-        "docker", "--allow-root", "run",
-        "-v", "/content/tools/firefox:/config",
-        "-p", "5800:5800",
+        "udocker", 
+        "--allow-root", 
+        "run", 
+        "-v", "/content/tools/firefox:/config", 
+        "-p", "5800:5800", 
         "jlesage/firefox"
     ]
     
+    # Run the command using subprocess
     try:
-        # Run the command
         subprocess.run(command, check=True)
-        print("Docker container is running successfully.")
+        print("Udocker container started successfully.")
     except subprocess.CalledProcessError as e:
-        print(f"Error running Docker command: {e}")
+        print(f"Error occurred: {e}")
     except FileNotFoundError:
-        print("Docker is not installed or not found in the system path.")
-
+        print("Udocker not found. Please make sure it's installed and available in your PATH.")
+    
 if __name__ == "__main__":
-    run_docker()
+    run_udocker()
