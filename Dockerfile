@@ -1,9 +1,7 @@
-FROM accetto/xubuntu-vnc-novnc
+FROM jlesage/firefox
 
-# Expose necessary ports for VNC and noVNC
-EXPOSE 5901
-EXPOSE 6901
+# Expose necessary ports for VNC
+EXPOSE 5800
 
-# Optionally, you can add any necessary configuration or commands here
-
-CMD ["sh", "-c", "docker --allow-root run -v -p 5902:5901 -p 6902:6901 accetto/xubuntu-vnc-novnc"]
+# Run the container with necessary options
+CMD ["sh", "-c", "docker --allow-root run -v /content/tools/firefox:/config -p 5800:5800 jlesage/firefox"]
