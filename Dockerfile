@@ -1,14 +1,9 @@
-# Use Node.js v22.12.01 runtime as the parent image
-FROM node:22.12.0-alpine
+FROM accetto/xubuntu-vnc-novnc
 
-# Set the working directory
-WORKDIR /app
+# Expose necessary ports for VNC and noVNC
+EXPOSE 5901
+EXPOSE 6901
 
-# Install required dependencies for npx (e.g., bash)
-RUN apk add --no-cache bash
+# Optionally, you can add any necessary configuration or commands here
 
-# Expose port 5678 for the n8n web interface
-EXPOSE 5678
-
-# Run n8n using npx when the container starts
-CMD ["npx", "n8n"]
+CMD ["sh", "-c", "docker --allow-root run -v -p 5902:5901 -p 6902:6901 accetto/xubuntu-vnc-novnc"]
