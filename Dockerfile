@@ -1,7 +1,10 @@
 FROM jlesage/firefox
 
-# Expose necessary ports for VNC
+# Set working directory (optional)
+WORKDIR /content/tools/firefox
+
+# Expose port
 EXPOSE 5800
 
-# Run the container with necessary options
-CMD ["sh", "-c", "docker --allow-root run -v /content/tools/firefox:/config -p 5800:5800 jlesage/firefox"]
+# Command to run the container when it's started
+CMD ["--allow-root", "run", "-v", "/content/tools/firefox:/config", "-p", "5800:5800"]
